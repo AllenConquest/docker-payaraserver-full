@@ -1,4 +1,4 @@
-FROM openjdk:8u201-jdk-alpine
+FROM openjdk:8u191-jdk-alpine
 
 # Default payara ports to expose
 # 4848: admin console
