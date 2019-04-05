@@ -113,6 +113,7 @@ If you do not want to create a sub-image, you can also mount a volume to `/opt/p
 The following environment variables are available to be used. When edited either in a `Dockerfile` or before the `startInForeground.sh` script is ran, they will change the behaviour of the Payara Server instance.
 
 - `JVM_ARGS` - Specifies a list of JVM arguments which will be passed to Payara in the `startInForeground.sh` script.
+- `PAYARA_ARGS` - Specified a list of arguements that will be passed to Payara at start-up. For example `-d` can be used to enable debugging.
 - `DEPLOY_PROPS` - Specifies a list of properties to be passed with the deploy commands generated in the `generate_deploy_commands.sh` script, For example `'--properties=implicitCdiEnabled=false'`.
 - `POSTBOOT_COMMANDS` - The name of the file containing post boot commands for the Payara Server instance. This is the file written to in the `generate_deploy_commands.sh` script.
 - `PREBOOT_COMMANDS` - The name of the file containing pre boot commands for the Payara Server instance.

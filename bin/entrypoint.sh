@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Run init scripts (credits go to MySQL Docker entrypoint script)
 for f in ${SCRIPT_DIR}/init_* ${SCRIPT_DIR}/init.d/*; do
