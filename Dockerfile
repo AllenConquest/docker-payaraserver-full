@@ -64,7 +64,7 @@ RUN wget -q -O payara.zip ${PAYARA_PKG} && \
     # Configure the password file for configuring Payara
     echo "AS_ADMIN_PASSWORD=" > /tmp/tmpfile; echo "AS_ADMIN_NEWPASSWORD=${ADMIN_PASSWORD}" >> /tmp/tmpfile && \
     echo "AS_ADMIN_PASSWORD=${ADMIN_PASSWORD}" >> ${PASSWORD_FILE} && \
-#RUN # Configure the payara domain && \
+    # Configure the payara domain 
     ${PAYARA_DIR}/bin/asadmin --user ${ADMIN_USER} --passwordfile=/tmp/tmpfile change-admin-password --domain_name=${DOMAIN_NAME} && \
     ${PAYARA_DIR}/bin/asadmin --user=${ADMIN_USER} --passwordfile=${PASSWORD_FILE} start-domain ${DOMAIN_NAME} && \
     ${PAYARA_DIR}/bin/asadmin --user=${ADMIN_USER} --passwordfile=${PASSWORD_FILE} enable-secure-admin && \
