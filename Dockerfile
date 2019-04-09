@@ -81,5 +81,5 @@ COPY --chown=payara:payara bin/*.sh ${SCRIPT_DIR}/
 RUN mkdir -p ${SCRIPT_DIR}/init.d && \
     chmod +x ${SCRIPT_DIR}/*
 
-CMD ["scripts/entrypoint.sh"]
 ENTRYPOINT ["/sbin/tini", "--"]
+CMD ${SCRIPT_DIR}/entrypoint.sh
