@@ -11,7 +11,6 @@ EXPOSE 4848 9009 8080 8181
 ARG PAYARA_VERSION=5.191
 ARG PAYARA_PKG=https://search.maven.org/remotecontent?filepath=fish/payara/distributions/payara/${PAYARA_VERSION}/payara-${PAYARA_VERSION}.zip
 ARG PAYARA_SHA1=55d2f40559a4e9a9baa93756213be1488f203f84
-ARG TINI_VERSION=v0.18.0
 
 # Initialize the configurable environment variables
 ENV HOME_DIR=/opt/payara\
@@ -33,7 +32,7 @@ ENV HOME_DIR=/opt/payara\
 ENV PATH="${PATH}:${PAYARA_DIR}/bin"
 
 # Add package required for creating new groups and users
-RUN apk add -q --no-cache shadow gnupg
+RUN apk add -q --no-cache shadow tini
 
 # Create and set the Payara user and working directory owned by the new user
 RUN groupadd -g 1000 payara && \
@@ -44,14 +43,6 @@ RUN groupadd -g 1000 payara && \
     mkdir -p ${SCRIPT_DIR} && \
     chown -R payara: ${HOME_DIR} && \
     apk del -q shadow
-
-# Install tini as minimized init system
-RUN wget -q -O /tini https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
-    wget -q -O /tini.asc https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc && \
-    gpg --batch --keyserver "hkp://p80.pool.sks-keyservers.net:80" --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && \
-    gpg --batch --verify /tini.asc /tini && \
-    chmod +x /tini && \
-    apk del -q gnupg
 
 USER payara
 WORKDIR ${HOME_DIR}
@@ -90,5 +81,5 @@ COPY --chown=payara:payara bin/*.sh ${SCRIPT_DIR}/
 RUN mkdir -p ${SCRIPT_DIR}/init.d && \
     chmod +x ${SCRIPT_DIR}/*
 
-ENTRYPOINT ["/tini", "--"]
 CMD ["scripts/entrypoint.sh"]
+ENTRYPOINT ["/sbin/tini", "--"]
