@@ -1,4 +1,4 @@
-FROM openjdk:8u191-jdk-alpine
+FROM openjdk:8-jdk-alpine
 
 # Default payara ports to expose
 # 4848: admin console
@@ -32,17 +32,16 @@ ENV HOME_DIR=/opt/payara\
 ENV PATH="${PATH}:${PAYARA_DIR}/bin"
 
 # Add package required for creating new groups and users
-RUN apk add -q --no-cache shadow tini
+RUN apk add -q --no-cache tini
 
 # Create and set the Payara user and working directory owned by the new user
-RUN groupadd -g 1000 payara && \
-    useradd -u 1000 -M -s /bin/bash -d ${HOME_DIR} payara -g payara && \
+RUN addgroup -S -g 1000 payara && \
+    adduser -S -u 1000 -s /bin/bash -h ${HOME_DIR} payara -G payara && \
     echo payara:payara | chpasswd && \
     mkdir -p ${DEPLOY_DIR} && \
     mkdir -p ${CONFIG_DIR} && \
     mkdir -p ${SCRIPT_DIR} && \
-    chown -R payara: ${HOME_DIR} && \
-    apk del -q shadow
+    chown -R payara: ${HOME_DIR}
 
 USER payara
 WORKDIR ${HOME_DIR}
