@@ -19,6 +19,7 @@ ENV HOME_DIR=/opt/payara\
     CONFIG_DIR=/opt/payara/config\
     DEPLOY_DIR=/opt/payara/deployments\
     PASSWORD_FILE=/opt/payara/passwordFile\
+    TZ=Europe/London\
     # Payara Server Domain options
     DOMAIN_NAME=production\
     ADMIN_USER=admin\
@@ -32,7 +33,7 @@ ENV HOME_DIR=/opt/payara\
 ENV PATH="${PATH}:${PAYARA_DIR}/bin"
 
 # Add package required for creating new groups and users
-RUN apk add -q --no-cache tini
+RUN apk add -q --no-cache tini tzdata
 
 # Create and set the Payara user and working directory owned by the new user
 RUN addgroup -S -g 1000 payara && \
@@ -42,6 +43,9 @@ RUN addgroup -S -g 1000 payara && \
     mkdir -p ${CONFIG_DIR} && \
     mkdir -p ${SCRIPT_DIR} && \
     chown -R payara: ${HOME_DIR}
+
+# set timezone
+ENV TZ = ${TZ}
 
 USER payara
 WORKDIR ${HOME_DIR}

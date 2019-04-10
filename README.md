@@ -112,6 +112,7 @@ If you do not want to create a sub-image, you can also mount a volume to `/opt/p
 
 The following environment variables are available to be used. When edited either in a `Dockerfile` or before the `startInForeground.sh` script is ran, they will change the behaviour of the Payara Server instance.
 
+- `TZ` - Specifies the timzone. For example `TZ=Europe/London`. A full list of timezones can be found here https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 - `JVM_ARGS` - Specifies a list of JVM arguments which will be passed to Payara in the `startInForeground.sh` script.
 - `PAYARA_ARGS` - Specified a list of arguements that will be passed to Payara at start-up. For example `-d` can be used to enable debugging.
 - `DEPLOY_PROPS` - Specifies a list of properties to be passed with the deploy commands generated in the `generate_deploy_commands.sh` script, For example `'--properties=implicitCdiEnabled=false'`.
